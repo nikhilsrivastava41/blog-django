@@ -3,5 +3,5 @@ from django.urls import path, include
 from .import views
 urlpatterns = [
     path('', views.home, name='home'),
-    path('/alone', views.alone, name='alone')
+    path('<str:slug>', views.blogpost, name='blogpost')
 ]

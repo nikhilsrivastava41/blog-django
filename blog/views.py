@@ -4,8 +4,8 @@ from django.shortcuts import render, HttpResponse
 
 
 def home(request):
-    return HttpResponse("Hello")
+    return render(request, 'blog/home.html')
 
 
-def alone(request):
-    return HttpResponse("Hello Blogpost")
+def blogpost(request, slug):
+    return render(request, 'blog/post.html')
