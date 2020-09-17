@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from home.models import Contact
+from django.contrib import messages
 # Create your views here.
 
 
@@ -12,11 +13,17 @@ def about(request):
 
 
 def contact(request):
+
     if request.method == 'POST':
         name = request.POST['name']
         email = request.POST['email']
         phone = request.POST['phone']
         content = request.POST['content']
-        contact = Contact(name=name, email=email, phone=phone, content=content)
-        contact.save()
+        if len(name) <= 0 or len(email) <= 5 or len(phone) < 10 or len(content) < 1:
+            messages.error(request, "One of the fields not filled correctly")
+        else:
+            messages.success(request, 'Issue submitted successfully!')
+            contact = Contact(name=name, email=email,
+                              phone=phone, content=content)
+            contact.save()
     return render(request, "home/contact.html")
