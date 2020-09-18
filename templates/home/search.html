@@ -1,7 +1,10 @@
 {% extends 'base.html' %}{% block title %}Search Results{% endblock title %}ssas
 {% block blogactive %}active {% endblock blogactive %}{% block body %}
 <div class="container my-4">
-  {% for post in everypost %}
+  {% if everypost|length < 1%}
+
+  <h4>No matching results found</h4>
+  {% endif%} {% for post in everypost %}
 
   <div
     class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"

@@ -32,5 +32,9 @@ def contact(request):
 
 def search(request):
     search = request.GET['search']
-    everypost = Post.objects.filter(title__icontains=search)
+    everyposttitle = Post.objects.filter(title__icontains=search)
+    everypostcontent = Post.objects.filter(content__icontains=search)
+    everypost = everyposttitle.union(everypostcontent)
+    if len(everypost) == 0:
+        messages.warning(request, "Please refine your query")
     return render(request, 'home/search.html', {'everypost': everypost})
