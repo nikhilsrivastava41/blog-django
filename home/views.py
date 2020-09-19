@@ -1,7 +1,8 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from home.models import Contact
 from django.contrib import messages
 from blog.models import Post
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -38,3 +39,24 @@ def search(request):
     if len(everypost) == 0:
         messages.warning(request, "Please refine your query")
     return render(request, 'home/search.html', {'everypost': everypost})
+
+
+def signup(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        password = request.POST['password']
+        if not username.isalnum():
+            messages.error(
+                request, "Usename should by consisting of only numbers or characters")
+            return redirect('home')
+        user = User.objects.create_user(username, email, password)
+        user.first_name = fname
+        user.last_name = lname
+        user.save()
+        messages.success(request, "User created successfully")
+        return redirect('home')
+    else:
+        return HttpResponse("404 Not Found")
