@@ -11,7 +11,7 @@ def home(request):
 def blogpost(request, slug):
     post = Post.objects.filter(slug=slug).first()
     comment = BlogComment.objects.filter(post=post)
-    return render(request, 'blog/post.html', {'post': post, 'comment': comment})
+    return render(request, 'blog/post.html', {'post': post, 'comment': comment, 'user': request.user})
 
 
 def postcomment(request):
